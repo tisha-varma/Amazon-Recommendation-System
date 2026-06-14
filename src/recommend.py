@@ -9,7 +9,7 @@ PROCESSED_DATA_DIR = os.path.join("data", "processed")
 MODELS_DIR         = "models"
 
 FILTERED_PATH     = os.path.join(PROCESSED_DATA_DIR, "ratings_filtered.csv")
-META_PATH         = os.path.join("data", "raw", "video_games_meta.csv")
+META_PATH         = os.path.join("data", "processed", "video_games_meta.csv")
 
 
 def load_model(name):
