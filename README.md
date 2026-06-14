@@ -9,8 +9,6 @@
 [![scikit-surprise](https://img.shields.io/badge/scikit--surprise-1.1.5-orange)](https://surpriselib.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-*Built for the Amazon ML Summer School application — demonstrating collaborative filtering, proper ML evaluation, and production-ready explainability.*
-
 **[🔴 Live Demo](https://your-app.streamlit.app)** &nbsp;|&nbsp; **[📓 EDA Notebook](notebooks/eda.ipynb)** &nbsp;|&nbsp; **[📊 Model Comparison](outputs/model_comparison.png)**
 
 </div>
@@ -252,26 +250,3 @@ NMF's non-negativity constraint acts as an implicit regulariser. All factors rep
 KNN finds many relevant items in the top 10 (good precision), but it doesn't always put the *most relevant* item at rank #1 (lower NDCG). SVD and NMF are better at ordering — they produce a finer-grained rating score that separates a 5-star recommendation from a 4.2-star one.
 
 ---
-
-## 📜 Citation
-
-```bibtex
-@article{hou2024bridging,
-  title={Bridging Language and Items for Retrieval and Recommendation},
-  author={Hou, Yupeng and Li, Jiacheng and He, Zhankui and Yan, An and Chen, Xiusi and McAuley, Julian},
-  journal={arXiv preprint arXiv:2403.03952},
-  year={2024}
-}
-```
-
----
-
-## 📝 Resume Bullet
-
-> *"Built a collaborative filtering recommendation system comparing SVD, KNN, and NMF on Amazon Video Games Reviews 2023 (2,966 users, 240 items, 22,841 interactions); achieved NDCG@10 of 0.826 and Recall@10 of 0.784 with explainable co-purchase recommendations; deployed as an interactive Streamlit app."*
-
----
-
-<div align="center">
-Made with ❤️ for Amazon ML Summer School 2024
-</div>
