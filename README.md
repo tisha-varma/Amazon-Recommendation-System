@@ -203,6 +203,8 @@ recsys/
 | numpy | 1.26 | Numerical operations |
 
 ---
+<img width="1912" height="877" alt="image" src="https://github.com/user-attachments/assets/70492f38-57f2-44be-b103-b495d307fa1f" />
+
 
 ## 🚀 Run Locally
 
