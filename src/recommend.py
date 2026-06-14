@@ -26,9 +26,15 @@ def load_data():
 
 def get_item_name(item_id, meta_df):
     row = meta_df[meta_df["item_id"] == item_id]
-    if row.empty or pd.isna(row.iloc[0]["title"]):
-        return item_id
-    return str(row.iloc[0]["title"])
+    if row.empty:
+        return f"Gaming Product ({item_id})"
+    title = row.iloc[0]["title"]
+    if pd.isna(title) or str(title).strip() == "":
+        return f"Gaming Product ({item_id})"
+    title = str(title).strip()
+    if len(title) > 80:
+        title = title[:80].rsplit(" ", 1)[0] + "…"
+    return title
 
 
 def get_popular_fallback(ratings_df, meta_df, top_n=10, exclude_items=None):

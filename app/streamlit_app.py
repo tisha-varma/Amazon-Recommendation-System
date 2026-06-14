@@ -156,13 +156,14 @@ them loosely interpretable as topics like *"action"* or
 - **Dataset**: Amazon Video Games Reviews 2023
 - **Models**: SVD · KNN · NMF (Surprise library)
 - **Metrics**: RMSE · Precision@10 · NDCG@10
-- **Built by**: Your Name
-- **[GitHub Repo](https://github.com)**
+- **Built by**: Tisha Varma
+- **Email**: varmatisha0@gmail.com
+- **[GitHub Repo](https://github.com/tisha-varma/Amazon-Recommendation-System)**
         """)
 
 # ── Main Area ─────────────────────────────────────────────────────────────────
 st.markdown('<div class="hero-title">🎮 Game Recommender</div>', unsafe_allow_html=True)
-st.markdown('<div class="hero-sub">Amazon Video Games · Powered by Collaborative Filtering</div>',
+st.markdown('<div class="hero-sub">Amazon Video Games &nbsp;·&nbsp; Powered by Collaborative Filtering &nbsp;·&nbsp; Built by <a href="mailto:varmatisha0@gmail.com" style="color:#667eea;text-decoration:none;">Tisha Varma</a></div>',
             unsafe_allow_html=True)
 
 with st.spinner("Loading dataset…"):

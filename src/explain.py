@@ -48,11 +48,21 @@ def explain_knn_recommendation(user_id, recommended_item_id,
 
     def get_name(item_id):
         row = meta_df[meta_df["item_id"] == item_id]
-        if row.empty or pd.isna(row.iloc[0]["title"]):
-            return item_id
-        return str(row.iloc[0]["title"])[:50]
+        if row.empty:
+            return None
+        title = row.iloc[0]["title"]
+        if pd.isna(title) or str(title).strip() == "":
+            return None
+        title = str(title).strip()
+        # Truncate cleanly at word boundary
+        if len(title) > 60:
+            title = title[:60].rsplit(" ", 1)[0] + "…"
+        return title
 
-    reason_names = [get_name(iid) for iid in reason_items]
+    reason_names = [n for n in (get_name(iid) for iid in reason_items) if n]
+
+    if not reason_names:
+        return "Recommended because users with similar taste highly rated this."
 
     if len(reason_names) == 1:
         reason_str = reason_names[0]
@@ -61,9 +71,7 @@ def explain_knn_recommendation(user_id, recommended_item_id,
     else:
         reason_str = f"{reason_names[0]}, {reason_names[1]} and {reason_names[2]}"
 
-    rec_name = get_name(recommended_item_id)
-    return (f"Users who liked {reason_str} also highly rated "
-            f"products like this.")
+    return (f"Users who liked {reason_str} also highly rated products like this.")
 
 
 def explain_svd_recommendation(user_id, recommended_item_id,
@@ -94,11 +102,20 @@ def explain_svd_recommendation(user_id, recommended_item_id,
 
     def get_name(item_id):
         row = meta_df[meta_df["item_id"] == item_id]
-        if row.empty or pd.isna(row.iloc[0]["title"]):
-            return item_id
-        return str(row.iloc[0]["title"])[:50]
+        if row.empty:
+            return None
+        title = row.iloc[0]["title"]
+        if pd.isna(title) or str(title).strip() == "":
+            return None
+        title = str(title).strip()
+        if len(title) > 60:
+            title = title[:60].rsplit(" ", 1)[0] + "…"
+        return title
 
-    names = [get_name(iid) for iid in co_liked]
+    names = [n for n in (get_name(iid) for iid in co_liked) if n]
+
+    if not names:
+        return "Recommended based on your rating patterns and hidden preferences."
 
     if len(names) == 1:
         name_str = names[0]
