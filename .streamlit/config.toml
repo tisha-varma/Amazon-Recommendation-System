@@ -1,0 +1,2 @@
+[app]
+entry_point = "app/streamlit_app.py"

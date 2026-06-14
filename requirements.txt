@@ -1,0 +1,32 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# requirements.txt
+# All Python packages needed for the Amazon Video Games Recommendation System
+# Install with:  pip install -r requirements.txt
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Data handling ─────────────────────────────────────────────────────────────
+pandas==2.2.2          # DataFrames — our main tool for storing/manipulating data
+numpy==1.26.4          # Numerical operations (fast array math)
+
+# ── Machine Learning — Recommendation ────────────────────────────────────────
+scikit-surprise==1.1.5 # The Surprise library — SVD, KNN, NMF for RecSys
+scikit-learn==1.5.0    # LabelEncoder, train/test split utilities
+
+# ── Visualization ─────────────────────────────────────────────────────────────
+matplotlib==3.9.0      # Base plotting library
+seaborn==0.13.2        # Beautiful statistical plots built on matplotlib
+
+# ── Jupyter Notebook (for EDA) ────────────────────────────────────────────────
+jupyter==1.0.0         # Jupyter notebook server
+ipykernel==6.29.4      # Allows Jupyter to run Python
+
+# ── Web App ───────────────────────────────────────────────────────────────────
+streamlit==1.35.0      # Our web app framework — no HTML/CSS needed!
+
+# ── Data Download (Hugging Face) ─────────────────────────────────────────────
+datasets==2.19.2       # Download Amazon dataset directly from Hugging Face
+huggingface-hub==0.23.2
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+tqdm==4.66.4           # Progress bars so we can see long operations
+joblib==1.4.2          # Parallel processing and model saving (used by sklearn)
