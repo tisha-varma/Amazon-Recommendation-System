@@ -1,6 +1,8 @@
 <div align="center">
 
 # 🎮 Amazon Video Games Recommendation System
+<img width="400" height="400" alt="linkedin_ai_gaming_recsys_1782213938550" src="https://github.com/user-attachments/assets/21a78348-d274-4041-97a6-baca98b93cce" />
+
 
 ### Comparing SVD · KNN · NMF with Explainable AI Recommendations
 
