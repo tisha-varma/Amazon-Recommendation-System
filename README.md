@@ -30,6 +30,16 @@ Most recommendation tutorials stop at "here are your top 10 items." This project
 
 ---
 
+## ✨ Features
+
+- **Interactive UI**: Clean, dark-themed Streamlit interface.
+- **Explainable AI**: Every recommendation comes with a human-readable explanation of *why* it was chosen.
+- **Multiple Algorithms**: Compare SVD, KNN, and NMF in real-time.
+- **User Insights**: View stats and previously rated games for any user.
+- **Cold-Start Handling**: Gracefully falls back to popular items for new or unknown users.
+
+---
+
 ## ⚠️ Known Limitations
 
 | Limitation | Explanation |
@@ -216,17 +226,25 @@ recsys/
 | numpy | 1.26 | Numerical operations |
 
 ---
-<img width="1912" height="877" alt="image" src="https://github.com/user-attachments/assets/70492f38-57f2-44be-b103-b495d307fa1f" />
 
 
 ## 🚀 Run Locally
 
+It is recommended to use a virtual environment.
+
 ```bash
-# 1. Clone
+# 1. Clone the repository
 git clone https://github.com/tisha-varma/Amazon-Recommendation-System.git
 cd Amazon-Recommendation-System/recsys
 
-# 2. Install dependencies
+# 2. Create and activate a virtual environment
+python -m venv venv
+# On Windows:
+venv\Scripts\activate
+# On Mac/Linux:
+source venv/bin/activate
+
+# 3. Install dependencies
 pip install -r requirements.txt
 
 # 3. Stream & preprocess data   (~5 min — streams 1M records, no full download)
