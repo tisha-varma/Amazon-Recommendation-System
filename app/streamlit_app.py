@@ -16,86 +16,196 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-    .main { background: #0f0f1a; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: #1E1B4B; }
+    
+    /* Global Background */
+    .stApp { background-color: #F8F6FF; }
+    .stSidebar { background-color: #FFFFFF; border-right: 1px solid #E5E7EB; }
 
+    /* Streamlit Button Overrides */
+    .stButton>button { 
+        background: linear-gradient(135deg, #7C3AED, #06B6D4);
+        color: white; border: none; border-radius: 12px;
+        padding: 0.75rem 2rem; font-weight: 600; font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    .stButton>button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(124,58,237,0.3); color: white;}
+    
+    /* Random button override (we target it by kind secondary) */
+    div[data-testid="stButton"] > button[kind="secondary"] {
+        background: #FFFFFF;
+        color: #7C3AED;
+        border: 1px solid #7C3AED;
+    }
+    div[data-testid="stButton"] > button[kind="secondary"]:hover {
+        background: #F3F0FF;
+        color: #7C3AED;
+        box-shadow: 0 4px 12px rgba(124,58,237,0.1);
+    }
+    
+    /* Hero Section */
     .hero-title {
-        font-size: 2.8rem; font-weight: 700;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        margin-bottom: 0.2rem;
+        font-size: 3.2rem; font-weight: 700;
+        color: #7C3AED;
+        margin-bottom: 0.5rem;
+        letter-spacing: -1px;
     }
-    .hero-sub { color: #888; font-size: 1rem; margin-bottom: 1.5rem; }
-
-    .card {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        border: 1px solid #2d2d4e; border-radius: 16px;
-        padding: 1.4rem 1.6rem; margin-bottom: 1rem;
-        transition: transform 0.2s ease, border-color 0.2s ease;
+    .hero-badges {
+        display: flex; gap: 0.8rem; margin-bottom: 1.5rem;
     }
-    .card:hover { transform: translateY(-2px); border-color: #667eea; }
-    .card-rank { font-size: 0.75rem; color: #667eea; font-weight: 600;
-        text-transform: uppercase; letter-spacing: 1px; }
-    .card-title { font-size: 1.1rem; font-weight: 700; color: #e8e8ff; margin: 0.3rem 0; }
-    .card-rating { color: #ffd700; font-size: 1rem; margin-bottom: 0.4rem; }
-    .card-reason { color: #aaa; font-size: 0.88rem; line-height: 1.5;
-        border-left: 3px solid #667eea; padding-left: 0.8rem; margin-top: 0.5rem; }
-
-    .rated-card {
-        background: #12122a; border: 1px solid #2d2d4e; border-radius: 10px;
-        padding: 0.6rem 0.9rem; margin-bottom: 0.4rem; font-size: 0.85rem; color: #ccc;
+    .hero-badge {
+        background: #EDE9FE; color: #7C3AED; font-size: 0.9rem; font-weight: 600;
+        padding: 0.4rem 1rem; border-radius: 20px;
     }
-    .rated-card span { color: #ffd700; font-weight: 600; margin-right: 0.4rem; }
+    hr.hero-divider { border-top: 1px solid #DDD6FE; margin-bottom: 2rem; }
 
-    .stat-box { background: #1a1a2e; border: 1px solid #2d2d4e;
-        border-radius: 12px; padding: 1rem; text-align: center; }
-    .stat-val { font-size: 1.8rem; font-weight: 700; color: #667eea; }
-    .stat-lbl { font-size: 0.8rem; color: #888; }
+    /* Input Card */
+    .input-card {
+        background: #FFFFFF;
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(124,58,237,0.06);
+        margin-bottom: 1.5rem;
+    }
+    .input-label { font-size: 0.85rem; color: #6B7280; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; }
+    
+    div[data-testid="stTextInput"] input {
+        border: 1px solid #DDD6FE;
+        border-radius: 10px;
+        padding: 0.6rem 1rem;
+        color: #1E1B4B;
+    }
+    div[data-testid="stTextInput"] input:focus { border-color: #7C3AED; box-shadow: 0 0 0 1px #7C3AED; }
+
+    /* Recommendation Cards */
+    .rec-card {
+        background: #FFFFFF;
+        border: 1px solid #E5E7EB;
+        border-radius: 16px;
+        padding: 1.5rem; margin-bottom: 1.2rem;
+        box-shadow: 0 2px 12px rgba(124,58,237,0.05);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .rec-card:hover { 
+        transform: translateY(-4px); 
+        box-shadow: 0 12px 24px rgba(124,58,237,0.12);
+        border-color: #DDD6FE;
+    }
+    
+    .rank-badge { 
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 32px; height: 32px; border-radius: 50%;
+        font-size: 0.9rem; font-weight: 700; color: white;
+        margin-bottom: 0.8rem;
+    }
+    .rank-1 { background: linear-gradient(135deg, #F59E0B, #FBBF24); }
+    .rank-2 { background: linear-gradient(135deg, #9CA3AF, #D1D5DB); }
+    .rank-3 { background: linear-gradient(135deg, #B45309, #D97706); }
+    .rank-other { background: #7C3AED; }
+
+    .card-title { font-size: 1.2rem; font-weight: 700; color: #1E1B4B; margin: 0 0 0.5rem 0; }
+    .card-rating { color: #F59E0B; font-size: 1.1rem; margin-bottom: 0.8rem; font-weight: 600; }
+    
+    .card-reason { 
+        color: #6B7280; font-size: 0.9rem; line-height: 1.5; font-style: italic;
+        background: #F3F0FF; border-left: 3px solid #7C3AED; 
+        padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin-top: 0.5rem;
+    }
+
+    /* Rated Cards (Chips) */
+    .rated-chip {
+        display: inline-flex; align-items: center;
+        background: #FFFFFF;
+        border: 1px solid #E5E7EB; border-left: 4px solid #7C3AED;
+        border-radius: 8px; padding: 0.5rem 0.8rem; margin: 0 0.5rem 0.5rem 0;
+        font-size: 0.85rem; color: #1E1B4B; font-weight: 500;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .rated-chip span { color: #F59E0B; font-weight: 700; margin-right: 0.4rem; }
+    .rated-section-title { color: #7C3AED; font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem; margin-top: 1.5rem; }
+
+    /* Stat Boxes */
+    .stat-box { 
+        background: #FFFFFF; 
+        border: 1px solid #E5E7EB;
+        border-radius: 16px; padding: 1.2rem; text-align: center;
+        box-shadow: 0 2px 12px rgba(124,58,237,0.08);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .stat-box::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .stat-box.stat-games::before { background: #7C3AED; }
+    .stat-box.stat-avg::before { background: #06B6D4; }
+    .stat-box.stat-low::before { background: #F59E0B; }
+    .stat-box.stat-high::before { background: #10B981; }
+
+    .stat-box:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(124,58,237,0.12); }
+    .stat-val { font-size: 2rem; font-weight: 700; color: #7C3AED; }
+    .stat-lbl { font-size: 0.75rem; color: #6B7280; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.3rem; }
+
+    /* Sidebar Model Selector custom styling */
+    div[role="radiogroup"] > label {
+        background: #FFFFFF;
+        border: 1px solid #E5E7EB;
+        border-radius: 12px;
+        padding: 0.8rem 1rem;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    div[role="radiogroup"] > label:hover {
+        border-color: #DDD6FE;
+        background: #F8F6FF;
+    }
 
     .model-pill {
-        display: inline-block; background: #1e1e3a; border: 1px solid #667eea;
-        border-radius: 20px; padding: 0.2rem 0.7rem; font-size: 0.78rem;
-        color: #667eea; margin-top: 0.3rem;
+        display: inline-block; background: #ECFEFF; border: 1px solid #67E8F9;
+        border-radius: 20px; padding: 0.3rem 0.8rem; font-size: 0.75rem;
+        color: #0891B2; margin-top: 0.5rem; font-weight: 600;
+        margin-bottom: 1.5rem;
     }
-    .warning-box { background: #2a1a0a; border: 1px solid #8B6914;
-        border-radius: 10px; padding: 0.8rem 1rem;
-        color: #f0c040; font-size: 0.88rem; margin-bottom: 1rem; }
-    .section-label { font-size: 0.7rem; color: #555; text-transform: uppercase;
-        letter-spacing: 1.5px; margin-bottom: 0.4rem; }
+    
+    .warning-box { 
+        background: #FFFBEB; border: 1px solid #FCD34D;
+        border-radius: 12px; padding: 1.2rem 1.5rem;
+        color: #92400E; font-size: 0.95rem; margin-top: 2rem; 
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.1);
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# ── Model descriptions (visible, not just in expander) ─────────────────────────
+# ── Model descriptions ─────────────────────────────────────────────────────────
 MODEL_INFO = {
     "svd": {
         "label": "SVD — Matrix Factorization",
-        "oneliner": "Best overall RMSE. Finds hidden taste patterns (e.g. 'RPG lover').",
+        "oneliner": "Best overall RMSE. Finds hidden taste patterns.",
         "detail": "Decomposes the user-item matrix into 100 hidden 'taste profiles'. Fast, accurate, slight black-box.",
     },
     "knn": {
         "label": "KNN — Item Similarity",
-        "oneliner": "Most explainable. Recommends based on similar games you already loved.",
+        "oneliner": "Most explainable. Recommends similar games.",
         "detail": "Finds the 40 most similar items using cosine similarity. Explanations are traceable and honest.",
     },
     "nmf": {
         "label": "NMF — Topic Decomposition",
-        "oneliner": "Best ranking quality (NDCG). Factors represent additive 'game themes'.",
+        "oneliner": "Best ranking quality (NDCG). Additive themes.",
         "detail": "Like SVD but all factors ≥ 0, acting as genre/topic strengths. Best Precision@10 and Recall@10.",
     },
 }
-
 
 @st.cache_data(show_spinner=False)
 def load_datasets():
     return load_data()
 
-
 @st.cache_data(show_spinner=False)
 def get_sample_users(_ratings_df, n=20):
     counts = _ratings_df["user_id"].value_counts()
     return counts[counts >= 15].head(n).index.tolist()
-
 
 def render_stars(rating):
     full  = int(rating)
@@ -103,28 +213,36 @@ def render_stars(rating):
     empty = 5 - full - half
     return "★" * full + "½" * half + "☆" * empty
 
-
 def show_user_rated_games(user_id, ratings_df, meta_df, max_show=5):
     user_data = (
         ratings_df[ratings_df["user_id"] == user_id]
         .sort_values("rating", ascending=False)
-        .head(max_show)
     )
     if user_data.empty:
         return
-    st.markdown('<div class="section-label">🎮 Games this user has already rated</div>', unsafe_allow_html=True)
-    for row in user_data.itertuples():
+    
+    st.markdown('<div class="rated-section-title">🎮 Games Already Rated</div>', unsafe_allow_html=True)
+    
+    top_games = user_data.head(max_show)
+    chips_html = ""
+    for row in top_games.itertuples():
         name  = get_item_name(row.item_id, meta_df)
+        if len(name) > 35: name = name[:32] + "..."
         stars = render_stars(float(row.rating))
-        st.markdown(
-            f'<div class="rated-card"><span>{stars}</span>{name}</div>',
-            unsafe_allow_html=True,
-        )
-    total = len(ratings_df[ratings_df["user_id"] == user_id])
-    if total > max_show:
-        st.caption(f"…and {total - max_show} more rated games")
+        chips_html += f'<div class="rated-chip"><span>{stars}</span>{name}</div>'
+    
+    st.markdown(chips_html, unsafe_allow_html=True)
+    
+    if len(user_data) > max_show:
+        with st.expander(f"Show all {len(user_data)} games"):
+            all_chips = ""
+            for row in user_data.iloc[max_show:].itertuples():
+                name  = get_item_name(row.item_id, meta_df)
+                if len(name) > 35: name = name[:32] + "..."
+                stars = render_stars(float(row.rating))
+                all_chips += f'<div class="rated-chip"><span>{stars}</span>{name}</div>'
+            st.markdown(all_chips, unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
-
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -135,12 +253,11 @@ with st.sidebar:
         options=["nmf", "svd", "knn"],
         format_func=lambda x: MODEL_INFO[x]["label"],
     )
-    # Visible one-liner under the radio — no need to open expander
+    
     st.markdown(
         f'<div class="model-pill">💡 {MODEL_INFO[model_choice]["oneliner"]}</div>',
         unsafe_allow_html=True,
     )
-    st.markdown("<br>", unsafe_allow_html=True)
 
     with st.expander("📖 How does each model work?"):
         for key, info in MODEL_INFO.items():
@@ -149,51 +266,57 @@ with st.sidebar:
     top_n = st.slider("Number of Recommendations", min_value=5, max_value=20, value=10)
 
     st.markdown("---")
-    with st.expander("📊 Project Info"):
-        st.markdown("""
-- **Dataset**: Amazon Video Games Reviews 2023
-- **Models**: SVD · KNN · NMF (Surprise library)
-- **Metrics**: RMSE · Precision@10 · NDCG@10
-- **Built by**: Tisha Varma
-- **Email**: varmatisha0@gmail.com
-- **[GitHub](https://github.com/tisha-varma/Amazon-Recommendation-System)**
-        """)
-    with st.expander("⚠️ Known Limitations"):
-        st.markdown("""
-- Predicted ratings cluster near 5.0 — models are optimistic due to the dataset being 64% five-star reviews.
-- Cold-start: new users (not in training data) get popular-item fallback, not personalised picks.
-- Only covers items with ≥20 ratings — very niche games may not appear.
-        """)
+    st.markdown("### 📊 Project Info")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.caption("**Dataset**")
+        st.write("Amazon 2023")
+        st.caption("**Built by**")
+        st.write("Tisha Varma")
+    with col2:
+        st.caption("**Metrics**")
+        st.write("RMSE, NDCG@10")
+        st.caption("**Models**")
+        st.write("SVD, KNN, NMF")
+        
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    c1, c2 = st.columns(2)
+    with c1: st.link_button("GitHub", "https://github.com/tisha-varma/Amazon-Recommendation-System", use_container_width=True)
+    with c2: st.link_button("Email", "mailto:varmatisha0@gmail.com", use_container_width=True)
+
 
 # ── Main Area ──────────────────────────────────────────────────────────────────
 st.markdown('<div class="hero-title">🎮 Game Recommender</div>', unsafe_allow_html=True)
-st.markdown(
-    '<div class="hero-sub">Amazon Video Games &nbsp;·&nbsp; Collaborative Filtering '
-    '&nbsp;·&nbsp; Built by <a href="mailto:varmatisha0@gmail.com" '
-    'style="color:#667eea;text-decoration:none;">Tisha Varma</a></div>',
-    unsafe_allow_html=True,
-)
+st.markdown("""
+<div class="hero-badges">
+    <div class="hero-badge">14,839 users</div>
+    <div class="hero-badge">2,206 games</div>
+    <div class="hero-badge">128,687 interactions</div>
+</div>
+<hr class="hero-divider">
+""", unsafe_allow_html=True)
 
 with st.spinner("Loading dataset…"):
     ratings_df, meta_df = load_datasets()
 
 sample_users = get_sample_users(ratings_df)
 
+def pick_random_user():
+    st.session_state["user_input_key"] = random.choice(sample_users)
+
+st.markdown('<div class="input-label">Enter a User ID</div>', unsafe_allow_html=True)
 col_input, col_sample = st.columns([3, 2])
 with col_input:
     user_id_input = st.text_input(
         "User ID",
-        placeholder="Paste a user ID or click 'Pick a Random User' →",
+        placeholder="Paste a user ID...",
         label_visibility="collapsed",
+        key="user_input_key"
     )
 with col_sample:
-    if st.button("🎲 Pick a Random User", use_container_width=True):
-        st.session_state["selected_user"] = random.choice(sample_users)
+    st.button("🎲 Pick a Random User", use_container_width=True, type="secondary", on_click=pick_random_user)
 
-if "selected_user" in st.session_state and not user_id_input:
-    user_id_input = st.session_state["selected_user"]
-    st.info(f"Using sample user: `{user_id_input}`")
-
+st.markdown("<br>", unsafe_allow_html=True)
 run_btn = st.button("🔍 Get Recommendations", type="primary", use_container_width=True)
 
 if run_btn and user_id_input.strip():
@@ -202,21 +325,21 @@ if run_btn and user_id_input.strip():
 
     # ── User Stats ─────────────────────────────────────────────────────────────
     if stats["found"]:
+        st.markdown("<br>", unsafe_allow_html=True)
         c1, c2, c3, c4 = st.columns(4)
         with c1:
-            st.markdown(f'<div class="stat-box"><div class="stat-val">{stats["n_ratings"]}</div>'
+            st.markdown(f'<div class="stat-box stat-games"><div class="stat-val">{stats["n_ratings"]}</div>'
                         f'<div class="stat-lbl">Games Rated</div></div>', unsafe_allow_html=True)
         with c2:
-            st.markdown(f'<div class="stat-box"><div class="stat-val">{stats["avg_rating"]}</div>'
+            st.markdown(f'<div class="stat-box stat-avg"><div class="stat-val">{stats["avg_rating"]}</div>'
                         f'<div class="stat-lbl">Avg Rating</div></div>', unsafe_allow_html=True)
         with c3:
-            st.markdown(f'<div class="stat-box"><div class="stat-val">{stats["min_rating"]}★</div>'
+            st.markdown(f'<div class="stat-box stat-low"><div class="stat-val">{stats["min_rating"]}★</div>'
                         f'<div class="stat-lbl">Lowest Given</div></div>', unsafe_allow_html=True)
         with c4:
-            st.markdown(f'<div class="stat-box"><div class="stat-val">{stats["max_rating"]}★</div>'
+            st.markdown(f'<div class="stat-box stat-high"><div class="stat-val">{stats["max_rating"]}★</div>'
                         f'<div class="stat-lbl">Highest Given</div></div>', unsafe_allow_html=True)
-        st.markdown("<br>", unsafe_allow_html=True)
-
+        
         # ── Show games already rated ────────────────────────────────────────────
         show_user_rated_games(user_id, ratings_df, meta_df)
 
@@ -233,22 +356,32 @@ if run_btn and user_id_input.strip():
     if not recs:
         st.error("Could not generate recommendations for this user.")
     else:
-        if "warning" in recs[0]:
-            st.markdown(f'<div class="warning-box">⚠️ {recs[0]["warning"]}</div>',
-                        unsafe_allow_html=True)
-
-        st.markdown(f"### Top {len(recs)} Recommendations &nbsp; `{model_choice.upper()}`")
+        st.markdown(f"### Top {len(recs)} Recommendations")
 
         for rec in recs:
             stars = render_stars(rec["predicted_rating"])
+            rank = rec['rank']
+            rank_class = f"rank-{rank}" if rank <= 3 else "rank-other"
+            
             st.markdown(f"""
-<div class="card">
-    <div class="card-rank">#{rec['rank']}</div>
+<div class="rec-card">
+    <div class="rank-badge {rank_class}">#{rank}</div>
     <div class="card-title">{rec['item_name']}</div>
-    <div class="card-rating">{stars} &nbsp; {rec['predicted_rating']} predicted</div>
-    <div class="card-reason">💡 {rec['explanation']}</div>
+    <div class="card-rating">{stars} &nbsp; <span style="color:#6B7280; font-size:0.9rem;">{rec['predicted_rating']} predicted</span></div>
+    <div class="card-reason">"{rec['explanation']}"</div>
 </div>
 """, unsafe_allow_html=True)
 
 elif run_btn:
     st.warning("Please enter a User ID first.")
+
+# ── Known Limitations ──────────────────────────────────────────────────────────
+with st.expander("⚠️ Known Limitations"):
+    st.markdown("""
+<div class="warning-box">
+    <strong>Note on Dataset & Predictions:</strong><br><br>
+    • Predicted ratings cluster near 5.0 — models are optimistic due to the dataset being 64% five-star reviews.<br>
+    • Cold-start: new users (not in training data) get popular-item fallback, not personalised picks.<br>
+    • Only covers items with ≥20 ratings — very niche games may not appear.
+</div>
+    """, unsafe_allow_html=True)
