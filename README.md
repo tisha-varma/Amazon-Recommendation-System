@@ -9,9 +9,8 @@
 [![scikit-surprise](https://img.shields.io/badge/scikit--surprise-1.1.5-orange)](https://surpriselib.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-**[🔴 Live Demo](https://your-app.streamlit.app)** &nbsp;|&nbsp; **[📓 EDA Notebook](notebooks/eda.ipynb)** &nbsp;|&nbsp; **[📊 Model Comparison](outputs/model_comparison.png)**
+**[🔴 Live Demo](https://amazon-recommendation-system-games.streamlit.app/)** &nbsp;|&nbsp; **[📓 EDA Notebook](notebooks/eda.ipynb)** &nbsp;|&nbsp; **[📊 Model Comparison](outputs/model_comparison.png)**
 
-![App Screenshot](outputs/app_screenshot.png)
 
 </div>
 
@@ -21,6 +20,8 @@
 
 Most recommendation tutorials stop at "here are your top 10 items." This project goes further — it **compares three algorithms on real Amazon data** and generates **human-readable explanations** for every recommendation, similar to how Amazon shows *"Customers who bought X also bought Y."*
 
+https://github.com/user-attachments/assets/7740b96f-8f08-47a7-b7cb-ce703629bef9
+
 **Key differentiators:**
 - ✅ Three algorithms compared on four metrics (not just RMSE)
 - ✅ Explainable recommendations with traceable reasoning
@@ -29,6 +30,7 @@ Most recommendation tutorials stop at "here are your top 10 items." This project
 - ✅ Deployed Streamlit web app anyone can use
 
 ---
+
 
 ## ✨ Features
 
