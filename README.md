@@ -11,6 +11,8 @@
 
 **[🔴 Live Demo](https://your-app.streamlit.app)** &nbsp;|&nbsp; **[📓 EDA Notebook](notebooks/eda.ipynb)** &nbsp;|&nbsp; **[📊 Model Comparison](outputs/model_comparison.png)**
 
+![App Screenshot](outputs/app_screenshot.png)
+
 </div>
 
 ---
@@ -28,15 +30,26 @@ Most recommendation tutorials stop at "here are your top 10 items." This project
 
 ---
 
+## ⚠️ Known Limitations
+
+| Limitation | Explanation |
+|---|---|
+| Ratings cluster near 5.0 | 64% of the dataset is 5-star reviews, so models learn an optimistic prior. Real deployed systems balance this with calibration. |
+| Cold start | Users with no prior ratings get global popular-item fallback rather than personalised picks. |
+| Limited item pool | With `MIN_ITEM_RATINGS=20`, only items with sufficient ratings are included. Very niche games are excluded. |
+| Explanation approximation | SVD/NMF explanations use co-purchase patterns, not the true latent factors (which aren't human-readable). |
+
+---
+
 ## 📊 Results
 
 | Model | RMSE ↓ | Precision@5 ↑ | Precision@10 ↑ | Recall@10 ↑ | NDCG@10 ↑ |
 |:------|:------:|:-------------:|:--------------:|:-----------:|:---------:|
-| SVD   | **1.1199** | 0.3511 | 0.1928 | 0.7465 | 0.8256 |
-| KNN   | 1.1838 | 0.3613 | 0.2054 | 0.7632 | 0.8251 |
-| **NMF** | 1.1872 | **0.3679** | **0.2091** | **0.7837** | **0.8260** |
+| **SVD** | **1.1911** | 0.3481 | 0.1954 | 0.7443 | **0.8081** |
+| KNN   | 1.2527 | **0.3538** | **0.2004** | 0.7633 | 0.8053 |
+| NMF   | 1.2760 | 0.3514 | 0.1996 | **0.7642** | 0.8046 |
 
-**Winner:** NMF leads on Precision, Recall, and NDCG@10. SVD leads on RMSE.
+**Winner:** SVD leads on RMSE and NDCG@10. KNN leads on Precision@10. NMF leads on Recall@10.
 
 > **Why we don't rely on RMSE alone:** RMSE measures how accurately we predict the star rating, but a good recommender needs to rank the *right* items at the *top* — which NDCG measures. A model can have low RMSE but terrible ranking. That's why we use 4 metrics.
 
@@ -50,12 +63,12 @@ Most recommendation tutorials stop at "here are your top 10 items." This project
 |-----------|-------|
 | Source | [Amazon Reviews 2023](https://amazon-reviews-2023.github.io/) — Video Games |
 | Raw reviews sampled | 1,000,000 (streamed from 2.8M total — no full download) |
-| After filtering | **22,841** interactions |
-| Users | **2,966** |
-| Items | **240** |
-| Sparsity | **96.79%** |
-| Avg ratings / user | 7.7 |
-| Avg ratings / item | 95.2 |
+| After filtering | **128,687** interactions |
+| Users | **14,839** |
+| Items | **2,206** |
+| Sparsity | **99.61%** |
+| Avg ratings / user | 8.7 |
+| Avg ratings / item | 58.3 |
 | Split strategy | **Temporal** (80% train / 10% val / 10% test) |
 
 **Filtering strategy:** Users with fewer than 5 ratings and items with fewer than 50 ratings are removed. This is done iteratively until convergence (took 22 iterations) to handle the cascading effect — removing items can drop users below threshold and vice versa.

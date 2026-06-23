@@ -9,7 +9,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 MIN_USER_RATINGS   = 5    # minimum ratings a user must have
-MIN_ITEM_RATINGS   = 50   # raised to reduce item count and keep KNN model under 100MB
+MIN_ITEM_RATINGS   = 20   # lowered to 20 for broader item coverage (~1000+ items)
 TRAIN_RATIO        = 0.80
 VAL_RATIO          = 0.10
 
